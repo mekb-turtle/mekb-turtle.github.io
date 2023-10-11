@@ -1,0 +1,18 @@
+{
+  "name": "mekb-website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource/ubuntu": "^5.0.8",
+    "astro": "^3.2.4",
+    "astro-icon": "^0.8.1",
+    "astro-seo": "^0.8.0"
+  }
+}

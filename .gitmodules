@@ -1,0 +1,3 @@
+[submodule "catppuccin-palette"]
+	path = catppuccin-palette
+	url = https://github.com/catppuccin/palette.git

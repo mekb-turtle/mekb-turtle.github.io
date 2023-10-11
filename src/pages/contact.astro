@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BackButton from "../components/BackButton.astro";
+import Icon from "astro-icon";
+
+const socials = [
+    {
+        name: "Discord",
+        icon: "bi:discord",
+        username: "mekb.",
+        link: "https://discord.com/users/686869093604917249",
+        note: "note the dot"
+    },
+    {
+        name: "GitHub",
+        icon: "bi:github",
+        username: "mekb-turtle",
+        link: "https://github.com/mekb-turtle",
+        note: null
+    }
+];
+---
+
+<Layout title="Contact">
+    <main>
+        <h1>
+            <BackButton/>
+            <span>Contact</span>
+        </h1>
+        <ul class="no-bullet">
+            {socials.map(social =>
+                    <li>
+                        <a href={social.link} class="margin-r symbol">
+                            <Icon name={social.icon} width="24" height="24"></Icon>
+                        </a>
+                        {social.name}: <a href={social.link}>{social.username}</a>
+                        {social.note ? <span>&#x20;</span><sup class="subtext0">({social.note})</sup> : ""}
+                    </li>
+            )}
+        </ul>
+    </main>
+</Layout>
+<style>
+    svg {
+        color: var(--ctp-text);
+    }
+
+    .symbol {
+        position: relative;
+        top: 0.25em;
+        left: 0;
+        padding-top: 0.75em
+    }
+</style>
