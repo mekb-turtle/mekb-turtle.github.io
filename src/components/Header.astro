@@ -1,0 +1,72 @@
+---
+import BackButton from "./BackButton.astro";
+import ThemeCheckbox from "./ThemeCheckbox.astro";
+
+interface Props {
+    back_button: boolean;
+}
+
+const {back_button} = Astro.props;
+---
+
+<header class="shadow">
+    <ul class="no-bullet">
+        {back_button ?
+                <li class="float-l no-right-margin">
+                    <BackButton/>
+                </li>
+            : ""}
+        <li class="float-r">
+            <ThemeCheckbox/>
+        </li>
+    </ul>
+</header>
+
+<style>
+    header, footer {
+        width: 100%;
+        box-sizing: border-box;
+        background: var(--ctp-surface0);
+        vertical-align: center;
+        height: 3em;
+        line-height: 3em;
+        font-size: 20px;
+        padding: 0 1em;
+        position: sticky;
+        display: inline-block;
+        overflow: hidden;
+        text-wrap: none;
+        left: 0;
+    }
+
+    header {
+        top: 0;
+    }
+
+    footer {
+        bottom: 0;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        display: inline;
+    }
+
+    ul > li {
+        margin-left: 0.75em;
+        margin-right: 0.75em;
+    }
+
+    ul > li.no-right-margin {
+        margin-right: 0;
+    }
+
+    .float-l {
+        float: left;
+    }
+
+    .float-r {
+        float: right;
+    }
+</style>

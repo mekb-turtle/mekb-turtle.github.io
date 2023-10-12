@@ -1,26 +1,28 @@
 ---
+import Header from "../components/Header.astro";
+
 interface Props {
     title: string;
+    description: string;
+    back_button: boolean;
 }
 
-const {title} = Astro.props;
-const description = "my website lol";
-const canonicalURL = "lol";
+const {back_button, title, description} = Astro.props;
 
 import {SEO} from "astro-seo";
 
 import "../../catppuccin-palette/css/catppuccin.css";
 import "../styles/catppuccin.css";
 import "../styles/style.css";
+
 import "@fontsource/ubuntu/400.css";
+import "@fontsource/fira-code/400.css";
 ---
 
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" type="image/png" href="/favicon.png"/>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
     <SEO
             description={description}
             openGraph={{
@@ -28,21 +30,45 @@ import "@fontsource/ubuntu/400.css";
                     title, type: "website", image: ""
                 }
             }}
-            canonical={canonicalURL}
             twitter={{
                 title,
                 description,
                 card: "summary"
             }}
             extend={{
+                link: [
+                    {rel: "icon", type: "image/png", href: "/favicon.png"},
+                    {rel: "icon", type: "image/x-icon", href: "/favicon.ico"}
+                ],
                 meta: [
                     {name: "viewport", content: "width=device-width, initial-scale=1"},
                     {name: "generator", content: Astro.generator}
                 ]
             }}/>
     <title>{title}</title>
+    <script is:inline>
+        let theme = window.localStorage.getItem("theme");
+        if (theme !== "1" && theme !== "0") {
+            if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+                theme = "1";
+            } else {
+                theme = "0";
+            }
+        }
+
+        function updateTheme() {
+            if (theme === "1") {
+                document.documentElement.setAttribute("data-theme", "light");
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        }
+    </script>
 </head>
 <body>
-<slot/>
+<Header back_button={back_button}/>
+<main>
+    <slot/>
+</main>
 </body>
 </html>

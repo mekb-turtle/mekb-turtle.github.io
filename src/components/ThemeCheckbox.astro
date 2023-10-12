@@ -1,0 +1,82 @@
+---
+import Icon from "astro-icon";
+---
+
+<input name="theme-checkbox" type="checkbox" id="theme-checkbox"/>
+<label for="theme-checkbox" class="slider shadow">
+    <span class="slider-knob shadow">
+        <Icon class="sun" name="bi:sun-fill"/>
+        <Icon class="moon" name="bi:moon-fill"/>
+    </span>
+</label>
+
+<style>
+    .slider .moon {
+        color: var(--ctp-surface1);
+        display: inline;
+    }
+
+    .slider .sun {
+        color: var(--ctp-surface1);
+        display: none;
+    }
+
+    input#theme-checkbox:checked + .slider .moon {
+        display: none;
+    }
+
+    input#theme-checkbox:checked + .slider .sun {
+        display: inline;
+    }
+
+    input#theme-checkbox {
+        display: none;
+    }
+
+    .slider {
+        display: inline-block;
+        width: 3em;
+        height: 1.5em;
+        background-color: var(--ctp-surface1);
+        border-radius: 1em;
+        position: relative;
+        top: 5px;
+        left: 0;
+    }
+
+    .slider-knob {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        background-color: var(--ctp-text);
+        border-radius: 1em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+        transition: left 0.3s;
+    }
+
+    input#theme-checkbox:checked + .slider .slider-knob {
+        left: 1.5em;
+    }
+
+    .slider .sun, .slider .moon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(0.8);
+    }
+</style>
+
+<script is:inline>
+    const themeCheckbox = document.getElementById("theme-checkbox");
+
+    updateTheme();
+    themeCheckbox.checked = theme === "1";
+    themeCheckbox.addEventListener("change", function () {
+        theme = themeCheckbox.checked ? "1" : "0";
+        localStorage.setItem("theme", theme);
+        updateTheme();
+    })
+</script>

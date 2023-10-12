@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fontsource/fira-code':
+    specifier: ^5.0.13
+    version: 5.0.13
   '@fontsource/ubuntu':
     specifier: ^5.0.8
     version: 5.0.8
@@ -704,6 +707,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@fontsource/fira-code@5.0.13:
+    resolution: {integrity: sha512-OfXFu05YOnBebYK0XPDhb6u8t6/eicj7WE5UYzOTvF8hGexrFvZIVFSBBmTmurtDZdJnvAHAw1beSbDIZSjiaA==}
+    dev: false
 
   /@fontsource/ubuntu@5.0.8:
     resolution: {integrity: sha512-lZY64hVXrnkt/+5jRfm0uMiRv+lmrIdnATAnDj1SPqebmI2UDf3KC9p4rOkIYsBOjOsD6seJ82GIQE067DSvWw==}

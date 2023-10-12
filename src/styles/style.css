@@ -1,10 +1,15 @@
 a {
+    color: var(--ctp-text);
+    text-decoration: none;
+}
+
+a:not(.no-a), .a {
     color: var(--ctp-accent);
     cursor: pointer;
     text-decoration: none;
 }
 
-a:hover {
+a:not(.no-a):hover, .a:hover {
     text-decoration: underline;
 }
 
@@ -16,38 +21,12 @@ a:hover {
 html, body {
     background-color: var(--ctp-base);
     color: var(--ctp-text);
-    font-family: "Ubuntu", "Roboto", "FreeSans", "Segoe UI", sans-serif;
+    font-family: "Ubuntu", "Roboto", "Segoe UI", sans-serif;
     font-weight: 400;
     font-size: 16px;
     text-decoration: none;
     padding: 0;
     margin: 0;
-}
-
-header, footer {
-    width: 100%;
-    background: var(--ctp-surface0);
-    vertical-align: center;
-    height: 64px;
-    line-height: 64px;
-    font-size: 20px;
-    padding: 0 24px;
-    position: sticky;
-    left: 0;
-}
-
-header {
-    top: 0;
-}
-
-footer {
-    bottom: 0;
-}
-
-nav > * {
-    display: inline;
-    overflow: hidden;
-    text-wrap: none;
 }
 
 .subtext1 {
@@ -68,6 +47,7 @@ nav > * {
 
 .no-bullet {
     list-style-type: none;
+    padding-left: 0;
 }
 
 main {
@@ -102,4 +82,21 @@ code, pre, kbd {
 
 .small {
     font-size: 0.625em;
+}
+
+.shadow, .popout {
+    box-shadow: 0 0 5px 0 var(--shadow);
+}
+
+.popout {
+    outline: var(--ctp-surface1) solid 1px;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 1em;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.popout:hover {
+    transform: scale(1.15);
 }
