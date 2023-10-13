@@ -40,18 +40,19 @@ import Icon from "astro-icon";
     .slider {
         display: inline-block;
         width: 3em;
-        height: 1.5em;
+        height: 1.45em;
         background-color: var(--ctp-surface0);
         border-radius: 1em;
         position: relative;
-        top: 0.4em;
+        top: 0.35em;
         left: 0;
+        cursor: pointer;
     }
 
     .slider-knob {
         display: inline-block;
-        width: 1.5em;
-        height: 1.5em;
+        width: 1.45em;
+        height: 1.45em;
         background-color: var(--ctp-text);
         border-radius: 1em;
         position: absolute;
@@ -59,6 +60,7 @@ import Icon from "astro-icon";
         left: 0;
         transform: scale(0.8);
         transition: left 0.3s;
+        cursor: pointer;
     }
 
     input.theme-checkbox:checked + .slider .slider-knob {
