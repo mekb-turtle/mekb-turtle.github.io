@@ -2,15 +2,19 @@
 import Icon from "astro-icon";
 ---
 
-<input name="theme-checkbox" type="checkbox" id="theme-checkbox"/>
-<label for="theme-checkbox" class="slider shadow">
-    <span class="slider-knob shadow">
-        <Icon class="sun" name="bi:sun-fill"/>
-        <Icon class="moon" name="bi:moon-fill"/>
-    </span>
-</label>
+<div id="theme-slider" class="hidden">
+    <input name="theme-checkbox" type="checkbox" class="theme-checkbox" id="theme-checkbox"/>
+    <label for="theme-checkbox" class="slider shadow">
+        <span class="slider-knob shadow">
+            <Icon class="sun" name="bi:sun-fill"/>
+            <Icon class="moon" name="bi:moon-fill"/>
+        </span>
+    </label>
+</div>
 
 <style>
+    @import "../styles/themes.less";
+
     .slider .moon {
         color: var(--ctp-surface0);
         display: inline;
@@ -57,7 +61,7 @@ import Icon from "astro-icon";
         transition: left 0.3s;
     }
 
-    input#theme-checkbox:checked + .slider .slider-knob {
+    input.theme-checkbox:checked + .slider .slider-knob {
         left: 1.5em;
     }
 
@@ -70,9 +74,10 @@ import Icon from "astro-icon";
 </style>
 
 <script is:inline>
+    document.getElementById("theme-slider").classList.remove("hidden");
+
     const themeCheckbox = document.getElementById("theme-checkbox");
 
-    updateTheme();
     themeCheckbox.checked = theme === "1";
     themeCheckbox.addEventListener("change", function () {
         theme = themeCheckbox.checked ? "1" : "0";

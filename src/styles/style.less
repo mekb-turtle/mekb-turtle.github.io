@@ -1,0 +1,108 @@
+@import "themes.less";
+
+a {
+  color: var(--ctp-text);
+  text-decoration: none;
+}
+
+a:not(.no-a), .a {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:not(.no-a):hover, .a:hover {
+  text-decoration: underline;
+}
+
+:focus {
+  border-radius: 2px;
+  outline: var(--accent) solid 1px;
+}
+
+html, body {
+  background-color: var(--ctp-base);
+  color: var(--ctp-text);
+  font-family: "Ubuntu", "Roboto", "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subtext1 {
+  color: var(--ctp-subtext1);
+}
+
+.subtext0 {
+  color: var(--ctp-subtext0);
+}
+
+.margin-r {
+  margin-right: 0.25em;
+}
+
+.margin-l {
+  margin-left: 0.25em;
+}
+
+.no-bullet {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+main {
+  padding: 96px;
+}
+
+@media screen and (min-width: 801px) and (max-width: 999px) {
+  main {
+    padding: 4em !important;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 800px) {
+  main {
+    padding: 2em !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  main {
+    padding: 0.5em !important;
+  }
+}
+
+code, pre, kbd {
+  font-family: "Fira Code", "Fira Mono", "Ubuntu Mono", "Consolas", "Courier New", sans-serif;
+  background-color: var(--ctp-surface0);
+  border-radius: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.small {
+  font-size: 0.625em;
+}
+
+.shadow, .popout {
+  box-shadow: 0 0 5px 0 var(--shadow);
+}
+
+.hidden {
+  display: none;
+}
+
+.popout {
+  border: var(--ctp-surface1) solid 1px;
+  padding: 1em;
+  margin: 1em;
+  border-radius: 1em;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.popout:hover {
+  transform: scale(1.15);
+}

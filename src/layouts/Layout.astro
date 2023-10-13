@@ -11,9 +11,7 @@ const {back_button, title, description} = Astro.props;
 
 import {SEO} from "astro-seo";
 
-import "../../catppuccin-palette/css/catppuccin.css";
-import "../styles/catppuccin.css";
-import "../styles/style.css";
+import "../styles/style.less";
 
 import "@fontsource/ubuntu/400.css";
 import "@fontsource/fira-code/400.css";
@@ -63,6 +61,8 @@ import "@fontsource/fira-code/400.css";
                 document.documentElement.setAttribute("data-theme", "dark");
             }
         }
+
+        updateTheme();
     </script>
 </head>
 <body>
