@@ -89,7 +89,7 @@ code, pre, kbd {
 }
 
 .popout {
-    outline: var(--ctp-surface1) solid 1px;
+    border: var(--ctp-surface1) solid 1px;
     padding: 1em;
     margin: 1em;
     border-radius: 1em;
