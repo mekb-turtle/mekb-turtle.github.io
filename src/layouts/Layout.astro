@@ -11,6 +11,8 @@ const {back_button, title, description} = Astro.props;
 
 import {SEO} from "astro-seo";
 
+import "../styles/style.less";
+
 import "@fontsource/ubuntu/400.css";
 import "@fontsource/fira-code/400.css";
 ---
@@ -19,10 +21,6 @@ import "@fontsource/fira-code/400.css";
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/src/styles/style.less"/>
-    <noscript>
-        <link rel="stylesheet" href="/src/styles/themes_no_js.less"/>
-    </noscript>
     <SEO
             description={description}
             openGraph={{

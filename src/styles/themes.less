@@ -22,6 +22,18 @@
   --accent: var(--ctp-pink);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    .theme-dark();
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    .theme-light();
+  }
+}
+
 [data-theme="dark"] {
   .theme-dark();
 }
