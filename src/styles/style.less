@@ -91,7 +91,7 @@ main {
 }
 
 code, pre, kbd {
-  font-family: "Fira Code", "Fira Mono", "Ubuntu Mono", "Consolas", "Courier New", sans-serif;
+  font-family: "Fira Code", "Consolas", "Courier New", sans-serif;
   background-color: var(--ctp-surface0);
   border-radius: 10px;
   padding-left: 7px;
@@ -103,7 +103,7 @@ code, pre, kbd {
 }
 
 .shadow, .popout {
-  box-shadow: 0 0 5px 0 var(--shadow);
+  box-shadow: 0 0 0.3em 0.1em var(--shadow);
 }
 
 .hidden {
@@ -111,15 +111,18 @@ code, pre, kbd {
 }
 
 .popout {
-  border: var(--ctp-surface1) solid 1px;
+  background-color: var(--ctp-surface0);
   padding: 1em;
   margin: 1em;
   border-radius: 1em;
   display: inline-block;
-  box-shadow: 0 0 5px 0.1em var(--shadow);
   transition: transform 0.3s;
 }
 
 .popout:hover {
   transform: scale(1.15);
+}
+
+h1 {
+  text-shadow: 0 0 0.3em var(--shadow);
 }
