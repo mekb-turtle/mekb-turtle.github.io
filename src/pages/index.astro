@@ -1,13 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Icon from "astro-icon";
 ---
 
 <Layout title="mekb">
     <h1>mekb's website</h1>
-    <ul class="no-bullet">
+    <ul class="no-bullet inline-list">
         <li>
-            <a href="/contact" class="popout social">
-                Contact
+            <a href="/contact" class="popout popout-padding no-a">
+                <Icon name="bi:telephone-fill" class="margin-r symbol" width="24" height="24"></Icon>
+                <span class="a">Contact</span>
+            </a>
+        </li>
+        <li>
+            <a href="/tools" class="popout popout-padding no-a">
+                <Icon name="bi:wrench" class="margin-r symbol" width="24" height="24"></Icon>
+                <span class="a">Tools</span>
             </a>
         </li>
     </ul>

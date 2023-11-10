@@ -1,0 +1,309 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="shapez patch finder" back_button="true">
+    <h1>
+        <span>shapez patch finder</span>
+    </h1>
+
+    <noscript><p>Please enable Javascript and reload the page</p></noscript>
+    <div id="main">
+        <form action="#" id="form">
+            <label for="searchInput">
+                <span class="margin-l">Patch:</span>
+                <input class="input input-text" type="text" name="searchInput" id="searchInput" value="" placeholder="Shape/Color"/><br/>
+            </label>
+            <label for="seedInput">
+                <span class="margin-l">Seed:</span>
+                <input class="input input-text" type="text" name="seedInput" id="seedInput" value="" placeholder="Map Seed"/><br/>
+            </label>
+            <label for="fileInput">
+                <input class="input input-button" type="button" id="fakeFile" value="Upload"/>
+                <input class="hidden" name="fileInput" id="fileInput" type="file"/>
+            </label>
+            <input class="input input-button" type="submit" value="Search" id="submitButton" disabled=""/><br/>
+        </form>
+        <br/>
+        <div id="shape">
+            <img src="" class="shape" id="shape1" width="64" height="64"/>
+            <img src="" class="shape" id="shape2" width="64" height="64"/>
+            <img src="" class="shape" id="shape3" width="64" height="64"/>
+            <img src="" class="shape" id="shape4" width="64" height="64"/>
+            <img src="" class="shape" id="shape5" width="64" height="64"/>
+        </div>
+    </div>
+    <p class="error" id="errorText"></p>
+    <p id="titleText"></p>
+    <table id="table"></table>
+    <p id="limitText"></p>
+    <p id="helpText">
+        Type a shape code such as <code>RRWW</code> or <code>RuRuWuWu</code> to search.<br/>
+        You can also search for a color (<code>red</code>, <code>green</code>, or <code>blue</code>.)<br/>
+        Upload your save data or manually type your game's map seed.<br/><br/>
+        To get your save data, launch shapez, click on your save file,<br/>
+        and click the &quot;download&quot; icon to export it.<br/><br/>
+        You can press F4 twice in-game to see the coordinates in the bottom right.<br/>
+        No data is sent to servers, the script is done locally.<br/>
+    </p>
+</Layout>
+
+<style>
+    .shape {
+        position: relative;
+    }
+
+    #shape1 {
+        left: 0;
+    }
+
+    #shape2 {
+        left: -64px;
+    }
+
+    #shape3 {
+        left: -128px;
+    }
+
+    #shape4 {
+        left: -192px;
+    }
+
+    #shape5 {
+        left: -256px;
+    }
+</style>
+
+<script is:inline src="/shapez/lz.js"></script>
+<script is:inline src="/shapez/rng.js"></script>
+<script is:inline src="/shapez/save.js"></script>
+<script is:inline src="/shapez/shapez.js"></script>
+<script is:inline>
+    const findMax = 50;
+
+    let form = document.getElementById("form");
+    let searchInput = document.getElementById("searchInput");
+    let seedInput = document.getElementById("seedInput");
+    let fileInput = document.getElementById("fileInput");
+    let submitButton = document.getElementById("submitButton");
+    let errorText = document.getElementById("errorText");
+    let resultTable = document.getElementById("table");
+    let fakeFile = document.getElementById("fakeFile");
+    let titleText = document.getElementById("titleText");
+    let limitText = document.getElementById("limitText");
+
+    let searching = false;
+
+    function isValidSeed(s) {
+        // returns if the string is a valid seed number
+        return !!s.match(/^([0-9]|[1-9][0-9]{1,4}|100000)$/);
+    }
+
+    function resetDisplays() {
+        // clears output
+        limitText.innerText = "";
+        titleText.innerText = "";
+        resultTable.innerHTML = "";
+        errorText.innerText = "";
+    }
+
+    function readFile() {
+        if (fileInput.value && fileInput.files.length >= 1) {
+            // read file from input
+            if (!seedInput.disabled) {
+                seedInput.disabled = true;
+                const fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                    const fileData = e.target.result;
+                    try {
+                        if (fileInput.disabled) return;
+
+                        if (fileData.length < 1024) throw "length is less than 1024 (" + fileData.length + ")";
+                        if (fileData.charAt(0) !== "\x01") throw "first char is not \\x01";
+                        const lzDecompressedData = LZString.decompressFromEncodedURIComponent(fileData.substring(1));
+                        const jsonData = decompressObject(JSON.parse(lzDecompressedData.substring(lzDecompressedData.indexOf("{"))));
+                        const seed = jsonData?.dump?.map?.seed;
+                        if (!seed) throw "seed doesn't exist";
+
+                        if (fileInput.disabled) return;
+
+                        // set seed in input
+                        seedInput.value = seed;
+                        seedInput.disabled = false;
+                        checkInput();
+                    } catch (e) {
+                        // error out
+                        console.error("error getting seed from shapez file -", e);
+                        if (fileInput.disabled) return;
+                        seedInput.disabled = false;
+                        checkInput();
+                        errorText.innerText = "Error reading file, file is not valid shapez save file";
+                    }
+                };
+                fileReader.readAsBinaryString(fileInput.files[0]);
+            }
+            fileInput.value = "";
+        }
+    }
+
+    function imageSource(name) {
+        return "/shapez/images/" + name + ".png";
+    }
+
+    function checkInput(dontResetDisplays) {
+        let seed = seedInput.value;
+        let search = searchInput.value;
+
+        if (!dontResetDisplays) resetDisplays();
+
+        let validSeedInput;
+        if (typeof seed == "string" && !!seed.length > 0) {
+            validSeedInput = isValidSeed(seed);
+        }
+
+        let searchMatch;
+        if (searchInput.value && typeof searchInput.value == "string") {
+            searchMatch = searchInput.value.match(/^((red|green|blue)|((([RCWS]){4})|(([RCWS]u){4})))$/i);
+        }
+
+        searchInput.disabled = searching;
+        seedInput.disabled = searching;
+        fileInput.disabled = searching;
+
+        if (searching) return; // don't change if searching
+
+        readFile();
+
+        let isValid = false;
+        submitButton.disabled = !isValid;
+
+        let imageSources = ["", "", "", "", ""];
+        if (searchMatch && search) {
+            let isColor = !!searchMatch[2];
+            let isShape = !!searchMatch[3];
+
+            // remove "u" from shape code, so it's just 4 letters
+            if (isShape && search.length === 8)
+                search = search.charAt(0) + search.charAt(2) + search.charAt(4) + search.charAt(6);
+
+            // convert color to lowercase or shape to uppercase
+            if (isColor) search = search.toLowerCase();
+            if (isShape) search = search.toUpperCase();
+
+            // if there are more than 1 W's in the shape code, and it's not RRWW, show a cross
+            let crossShown = false;
+            if (0 + (search.charAt(0) === "W") + (search.charAt(1) === "W") + (search.charAt(2) === "W") + (search.charAt(3) === "W") > 1 && search !== "RRWW") {
+                errorText.innerText = search + " cannot appear in game, however RRWW can";
+                errorText.classList.remove("hidden");
+                crossShown = true;
+            } else {
+                errorText.innerText = "";
+                errorText.classList.add("hidden");
+                // enable submit button if the shape and seed is valid, and we are not searching
+                isValid = validSeedInput && !searching;
+                submitButton.disabled = !isValid;
+            }
+
+            if (isColor) imageSources[0] = imageSource(search);
+            if (isShape) {
+                imageSources[0] = imageSource(search.charAt(0) + "1");
+                imageSources[1] = imageSource(search.charAt(1) + "2");
+                imageSources[2] = imageSource(search.charAt(2) + "3");
+                imageSources[3] = imageSource(search.charAt(3) + "4");
+            }
+            if (crossShown) imageSources[4] = imageSource("cross");
+        }
+
+        imageSources.forEach(function (src, index) {
+            let shape = document.getElementById("shape" + (index + 1));
+            shape.src = src || "";
+            if (src) {
+                shape.classList.remove("hidden");
+            } else {
+                shape.classList.add("hidden");
+            }
+        })
+        submitButton.disabled = !isValid;
+        return isValid ? {search, seed} : false;
+    }
+
+    fakeFile.addEventListener("click", function () {
+        fileInput.click();
+    });
+
+    ["load", "blur", "change", "focus", "keyup", "keypress", "keydown", "mousedown", "click", "mouseup", "contextmenu"]
+        .forEach(function (e) {
+            let dontResetDisplays = e !== "change";
+            searchInput.addEventListener(e, function () {
+                checkInput(dontResetDisplays);
+            });
+            seedInput.addEventListener(e, function () {
+                checkInput(dontResetDisplays);
+            });
+            submitButton.addEventListener(e, function () {
+                checkInput(dontResetDisplays);
+            });
+            fileInput.addEventListener(e, function () {
+                checkInput(dontResetDisplays);
+            });
+        });
+
+    checkInput();
+
+    form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        let searchData = checkInput();
+        if (searchData) {
+            resetDisplays();
+
+            errorText.innerText = "";
+            errorText.classList.add("hidden");
+
+            limitText.innerText = "";
+            limitText.classList.add("hidden");
+
+            searching = true;
+            const result = findPatches(searchData.search, searchData.seed, findMax);
+            resultTable.innerHTML = "";
+
+            if (result.found) {
+                resultTable.classList.remove("hidden");
+
+                let headerRow = document.createElement("tr");
+                let headerX = document.createElement("th");
+                let headerY = document.createElement("th");
+                let textX = document.createTextNode("X");
+                let textY = document.createTextNode("Y");
+                headerX.appendChild(textX);
+                headerY.appendChild(textY);
+                headerRow.appendChild(headerX);
+                headerRow.appendChild(headerY);
+                resultTable.appendChild(headerRow);
+
+                for (let i = 0; i < result.results.length; ++i) {
+                    let row = document.createElement("tr");
+                    let valueX = document.createElement("td");
+                    let valueY = document.createElement("td");
+                    let textX = document.createTextNode(result.results[i].ax);
+                    let textY = document.createTextNode(result.results[i].ay);
+                    valueX.appendChild(textX);
+                    valueY.appendChild(textY);
+                    row.appendChild(valueX);
+                    row.appendChild(valueY);
+                    resultTable.appendChild(row);
+                }
+
+                if (result.results.length >= findMax) {
+                    limitText.classList.remove("hidden");
+                    limitText.innerText = findMax + " maximum reached";
+                }
+            } else {
+                resultTable.classList.add("hidden");
+                errorText.innerText = "No results found";
+                errorText.classList.remove("hidden");
+            }
+            searching = false;
+            checkInput(true);
+        }
+    });
+</script>

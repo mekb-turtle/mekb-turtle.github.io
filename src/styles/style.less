@@ -52,6 +52,10 @@ html, body {
   padding-left: 0;
 }
 
+.inline-list > li {
+  display: inline-block;
+}
+
 header, footer {
   padding: 0 4em;
 }
@@ -98,6 +102,14 @@ code, pre, kbd {
   padding-right: 7px;
 }
 
+.error {
+  color: var(--ctp-red);
+}
+
+.success {
+  color: var(--ctp-green);
+}
+
 .small {
   font-size: 0.625em;
 }
@@ -108,6 +120,17 @@ code, pre, kbd {
 
 .hidden {
   display: none;
+}
+
+.input {
+  border: none;
+  background-color: var(--ctp-surface0);
+  padding: 1em;
+  margin: 0.5em;
+  border-radius: 1em;
+  display: inline-block;
+  transition: transform 0.3s;
+  color: var(--ctp-text);
 }
 
 .popout {
@@ -123,6 +146,20 @@ code, pre, kbd {
   transform: scale(1.15);
 }
 
+.popout-padding {
+  padding: 0.6em 1em 1em 1em;
+}
+
+.symbol {
+  position: relative;
+  top: 5px;
+  left: 0;
+}
+
 h1 {
   text-shadow: 0 0 0.3em var(--shadow);
+}
+
+svg {
+  color: var(--ctp-text);
 }

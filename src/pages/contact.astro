@@ -32,10 +32,10 @@ const socials: Social[] = [
     <h1>
         <span>Contact</span>
     </h1>
-    <ul class="no-bullet">
+    <ul class="no-bullet inline-list">
         {socials.map(social =>
                 <li>
-                    <a href={social.link} class="popout social no-a">
+                    <a href={social.link} class="popout popout-padding no-a">
                         <Icon name={social.icon} class="margin-r symbol" width="24" height="24"></Icon>
                         {social.name}: <span class="a">{social.username}</span>
                         {social.note ? <span>&#x20;</span><sup class="subtext0">({social.note})</sup> : ""}
@@ -44,25 +44,3 @@ const socials: Social[] = [
         )}
     </ul>
 </Layout>
-
-<style>
-    @import "../styles/themes.less";
-
-    svg {
-        color: var(--ctp-text);
-    }
-
-    .social {
-        padding: 0.6em 1em 1em 1em;
-    }
-
-    li {
-        display: inline-block;
-    }
-
-    .symbol {
-        position: relative;
-        top: 5px;
-        left: 0;
-    }
-</style>
