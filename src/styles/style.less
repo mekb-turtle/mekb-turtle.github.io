@@ -64,6 +64,11 @@ main {
   padding: 2em 6em;
 }
 
+.smallimg {
+  width: 128px;
+  margin-right: 0.8em;
+}
+
 @media screen and (min-width: 801px) and (max-width: 999px) {
   header, footer {
     padding: 0 2em !important;
@@ -71,6 +76,11 @@ main {
 
   main {
     padding: 2em 4em !important;
+  }
+
+  .smallimg {
+    width: 96px;
+    margin-right: 0.6em;
   }
 }
 
@@ -81,6 +91,11 @@ main {
 
   main {
     padding: 2em 2em !important;
+  }
+
+  .smallimg {
+    width: 64px;
+    margin-right: 0.3em;
   }
 }
 
@@ -163,3 +178,14 @@ h1 {
 svg {
   color: var(--ctp-text);
 }
+
+.lcenter {
+  display: flex;
+  align-items: center;
+}
+
+.pfp {
+  border-radius: 50%;
+  filter: drop-shadow(0 0 0.3em var(--shadow));
+}
+
