@@ -7,7 +7,7 @@ import image from "../pfp.png";
 let text = [
     "Hi, I'm mekb.",
     "I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java."
-]
+];
 
 let fields = [
     {
@@ -22,11 +22,36 @@ let fields = [
         name: "Location",
         value: "\u{1f1e6}\u{1f1fa} Australia"
     }
-]
+];
+
+const socials = [
+    {
+        name: "Discord",
+        icon: "bi:discord",
+        username: "mekb.",
+        link: "https://discord.com/users/686869093604917249",
+        note: "note the dot"
+    },
+    {
+        name: "GitHub",
+        icon: "bi:github",
+        username: "mekb-turtle",
+        link: "https://github.com/mekb-turtle",
+        note: null
+    }
+];
+
+const links = [
+    {
+        name: "Tools",
+        link: "/tools",
+        icon: "bi:wrench"
+    }
+];
 ---
 
 <Layout title="mekb" description={text.join("\n")}>
-    <div class="lcenter bottom-margin">
+    <div class="lcenter bottom-2-margin">
         <Image src={image} alt="mekb" class="smallimg pfp" width="256"/>
         <div class="lvertical">
             <h1 class="small-v-margin">mekb</h1>
@@ -44,18 +69,29 @@ let fields = [
         </div>
     </div>
     {text.map((line) => <p>{line}</p>)}
+    <hr class="top-2-margin"/>
     <ul class="no-bullet inline-list">
-        <li>
-            <a href="/contact" class="popout popout-padding no-a">
-                <Icon name="bi:telephone-fill" class="symbol" width="24" height="24"></Icon>
-                <span class="a margin-l vsmall-hide">Contact</span>
-            </a>
-        </li>
-        <li>
-            <a href="/tools" class="popout popout-padding no-a">
-                <Icon name="bi:wrench" class="symbol" width="24" height="24"></Icon>
-                <span class="a margin-l vsmall-hide">Tools</span>
-            </a>
-        </li>
+        {socials.map(social =>
+                <li>
+                    <a href={social.link} class="popout popout-padding no-a">
+                        <Icon name={social.icon} class="symbol" width="24" height="24"></Icon>
+                        <span class="margin-l vsmall-hide">
+							<span class="small-hide">{social.name}: </span><span class="a">{social.username}</span>
+							<span class="small-hide">{social.note ? <span>&#x20;</span><sup class="subtext0">({social.note})</sup> : ""}</span>
+                        </span>
+                    </a>
+                </li>
+        )}
+    </ul>
+    <hr/>
+    <ul class="no-bullet inline-list">
+        {links.map(link =>
+                <li>
+                    <a href={link.link} class="popout popout-padding no-a">
+                        <Icon name={link.icon} class="symbol" width="24" height="24"></Icon>
+                        <span class="a margin-l vsmall-hide">{link.name}</span>
+                    </a>
+                </li>
+        )}
     </ul>
 </Layout>
