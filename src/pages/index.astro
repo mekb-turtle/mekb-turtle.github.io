@@ -4,22 +4,36 @@ import Icon from "astro-icon";
 ---
 
 <Layout title="mekb">
-	<h1 class="lcenter">
-		<img src="favicon.png" class="smallimg pfp" width="128"/>
-		mekb
-	</h1>
-    <p>Hi, I'm mekb. I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java.</p>
+    <div class="lcenter bottom-margin">
+        <img alt="mekb" src="favicon.png" class="smallimg pfp" width="128"/>
+        <div class="lvertical">
+            <h1 class="small-v-margin">mekb</h1>
+            <h4 class="small-v-margin hv-flex">
+                <span title="Pronouns">she/they/it</span>
+                <div class="bullet small-hide"></div>
+                <span title="Pronunciation">mek-bee</span>
+                <div class="bullet small-hide"></div>
+                <span title="Location">Australia</span>
+            </h4>
+        </div>
+    </div>
+    <p>
+        Hi, I'm mekb.
+    </p>
+    <p>
+        I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java.
+    </p>
     <ul class="no-bullet inline-list">
         <li>
             <a href="/contact" class="popout popout-padding no-a">
-                <Icon name="bi:telephone-fill" class="margin-r symbol" width="24" height="24"></Icon>
-                <span class="a">Contact</span>
+                <Icon name="bi:telephone-fill" class="symbol" width="24" height="24"></Icon>
+                <span class="a margin-l vsmall-hide">Contact</span>
             </a>
         </li>
         <li>
             <a href="/tools" class="popout popout-padding no-a">
-                <Icon name="bi:wrench" class="margin-r symbol" width="24" height="24"></Icon>
-                <span class="a">Tools</span>
+                <Icon name="bi:wrench" class="symbol" width="24" height="24"></Icon>
+                <span class="a margin-l vsmall-hide">Tools</span>
             </a>
         </li>
     </ul>
