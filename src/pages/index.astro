@@ -1,11 +1,13 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
 import Icon from "astro-icon";
+import image from "../pfp.png";
 ---
 
 <Layout title="mekb">
     <div class="lcenter bottom-margin">
-        <img alt="mekb" src="favicon.png" class="smallimg pfp" width="128"/>
+        <Image src={image} alt="mekb" class="smallimg pfp" width="256"/>
         <div class="lvertical">
             <h1 class="small-v-margin">mekb</h1>
             <h4 class="small-v-margin hv-flex">
