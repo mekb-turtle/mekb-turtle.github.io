@@ -3,28 +3,47 @@ import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
 import Icon from "astro-icon";
 import image from "../pfp.png";
+
+let text = [
+    "Hi, I'm mekb.",
+    "I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java."
+]
+
+let fields = [
+    {
+        name: "Pronouns",
+        value: "she/they/it"
+    },
+    {
+        name: "Pronunciation",
+        value: "mek-bee"
+    },
+    {
+        name: "Location",
+        value: "\u{1f1e6}\u{1f1fa} Australia"
+    }
+]
 ---
 
-<Layout title="mekb">
+<Layout title="mekb" description={text.join("\n")}>
     <div class="lcenter bottom-margin">
         <Image src={image} alt="mekb" class="smallimg pfp" width="256"/>
         <div class="lvertical">
             <h1 class="small-v-margin">mekb</h1>
             <h4 class="small-v-margin hv-flex">
-                <span title="Pronouns">she/they/it</span>
-                <div class="bullet small-hide"></div>
-                <span title="Pronunciation">mek-bee</span>
-                <div class="bullet small-hide"></div>
-                <span title="Location">&#x1f1e6;&#x1f1fa; Australia</span>
+                {
+                    fields
+                    .map((field) => <span title={field.name}>{field.value}</span>)
+                    .reduce((acc, item, i) => {
+                        if (i > 0) acc.push(<div class="bullet small-hide"></div>);
+                        acc.push(item);
+                        return acc;
+                    }, [])
+                }
             </h4>
         </div>
     </div>
-    <p>
-        Hi, I'm mekb.
-    </p>
-    <p>
-        I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java.
-    </p>
+    {text.map((line) => <p>{line}</p>)}
     <ul class="no-bullet inline-list">
         <li>
             <a href="/contact" class="popout popout-padding no-a">

@@ -1,8 +1,10 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+
+let text = "Tool to search for shape patches in shapez (1) game by seed.";
 ---
 
-<Layout title="shapez patch finder" back_button="true">
+<Layout title="shapez patch finder" description={text} back_button="true">
     <h1>
         <span>shapez patch finder</span>
     </h1>
@@ -38,6 +40,7 @@ import Layout from "../../../layouts/Layout.astro";
     <table id="table"></table>
     <p id="limitText"></p>
     <p id="helpText">
+		{text}<br/>
         Type a shape code such as <code>RRWW</code> or <code>RuRuWuWu</code> to search.<br/>
         You can also search for a color (<code>red</code>, <code>green</code>, or <code>blue</code>.)<br/>
         Upload your save data or manually type your game's map seed.<br/><br/>
