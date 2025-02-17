@@ -3,13 +3,20 @@ import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro";
 import Icon from "astro-icon";
 import image from "../pfp.png";
+import Emoji from 'astro-emoji';
 
-let text = [
+const text = [
     "Hi, I'm mekb.",
     "I'm a software developer, I mainly write in C and TypeScript, but sometimes Node.js, C#, Bash, and Java."
 ];
 
-let fields = [
+const header = {
+	name: "mekb",
+	emoji: "\u{1F353}",
+	emojiName: "strawberry"
+}
+
+const fields = [
     {
         name: "Pronouns",
         value: "she/they"
@@ -20,7 +27,9 @@ let fields = [
     },
     {
         name: "Location",
-        value: "\u{1f1e6}\u{1f1fa} Australia"
+		emoji: "\u{1f1e6}\u{1f1fa}",
+		emojiName: "Australian flag",
+        value: "Australia"
     }
 ];
 
@@ -52,13 +61,16 @@ const links = [
 
 <Layout title="mekb" description={text.join("\n")}>
     <div class="lcenter bottom-2-margin">
-        <Image src={image} alt="mekb" class="smallimg pfp" width="256"/>
+        <Image src={image} alt="mekb" class="bigimg pfp" width="256"/>
         <div class="lvertical">
-            <h1 class="small-v-margin">mekb</h1>
+			<h1 class="small-v-margin hv-flex hv-margin">
+				<div>{header.name}</div>
+				<div><Emoji symbol={header.emoji} label={header.emojiName} /></div>
+			</h1>
             <h4 class="small-v-margin hv-flex">
                 {
                     fields
-                    .map((field) => <span title={field.name}>{field.value}</span>)
+					.map((field) => <span title={field.name}>{field.emoji ? <Emoji symbol={field.emoji} label={field.emojiName} /> : ""}{field.value}</span>)
                     .reduce((acc, item, i) => {
                         if (i > 0) acc.push(<div class="bullet small-hide"></div>);
                         acc.push(item);
@@ -76,8 +88,8 @@ const links = [
                     <a href={social.link} class="popout popout-padding no-a">
                         <Icon name={social.icon} class="symbol" width="24" height="24"></Icon>
                         <span class="margin-l vsmall-hide">
-							<span class="small-hide">{social.name}: </span><span class="a">{social.username}</span>
-							<span class="small-hide">{social.note ? <span>&#x20;</span><sup class="subtext0">({social.note})</sup> : ""}</span>
+                            <span class="small-hide">{social.name}: </span><span class="a">{social.username}</span>
+                            <span class="small-hide">{social.note ? <span>&#x20;</span><sup class="subtext0">({social.note})</sup> : ""}</span>
                         </span>
                     </a>
                 </li>
